@@ -1,26 +1,79 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #f5f0e8;
+  --foreground: #1f1d1a;
+  --surface: #fffaf2;
+  --surface-strong: #f2e8da;
+  --line: #d8ccb9;
+  --muted: #6a6358;
+  --accent: #866245;
+  --accent-strong: #5f4531;
+  --placeholder: #e8ddce;
+  --shadow: 0 24px 80px rgba(62, 43, 28, 0.12);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-canvas: var(--background);
+  --color-ink: var(--foreground);
+  --color-panel: var(--surface);
+  --color-panel-strong: var(--surface-strong);
+  --color-line: var(--line);
+  --color-muted: var(--muted);
+  --color-accent: var(--accent);
+  --color-accent-strong: var(--accent-strong);
+  --color-placeholder: var(--placeholder);
+  --font-sans: var(--font-manrope);
+  --font-display: var(--font-newsreader);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+  border-color: var(--line);
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
+  min-height: 100vh;
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-manrope), sans-serif;
+  background:
+    radial-gradient(circle at top left, rgba(134, 98, 69, 0.14), transparent 30%),
+    radial-gradient(circle at top right, rgba(255, 255, 255, 0.72), transparent 26%),
+    linear-gradient(180deg, #f8f4ed 0%, #f2eadf 100%);
+}
+
+a,
+button {
+  transition:
+    color 180ms ease,
+    background-color 180ms ease,
+    border-color 180ms ease,
+    transform 180ms ease,
+    box-shadow 180ms ease;
+}
+
+::selection {
+  background: rgba(134, 98, 69, 0.18);
+}
+
+.catalog-shell {
+  position: relative;
+}
+
+.catalog-shell::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.12) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.12) 1px, transparent 1px);
+  background-size: 40px 40px;
+  mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.48), transparent 90%);
+  opacity: 0.35;
 }

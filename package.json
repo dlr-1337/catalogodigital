@@ -1,12 +1,14 @@
 {
-  "name": "pitaya",
+  "name": "catalogodigital",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "facilzap:probe": "node --env-file-if-exists=.env.local scripts/facilzap-probe.mjs",
+    "check": "npm run lint && npm run build"
   },
   "dependencies": {
     "next": "16.1.6",
