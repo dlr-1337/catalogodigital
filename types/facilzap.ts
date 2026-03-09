@@ -33,6 +33,21 @@ export type FacilzapVariationGroupRaw = {
   [key: string]: unknown;
 };
 
+export type FacilzapStockRaw =
+  | number
+  | string
+  | {
+      controlar_estoque?: unknown;
+      controla_estoque?: unknown;
+      estoque?: unknown;
+      quantidade?: unknown;
+      saldo?: unknown;
+      total?: unknown;
+      estoque_minimo?: unknown;
+      localizacao?: unknown;
+      [key: string]: unknown;
+    };
+
 export type FacilzapVariationRaw = {
   id?: unknown;
   grupo?: unknown;
@@ -42,7 +57,7 @@ export type FacilzapVariationRaw = {
   ordem?: unknown;
   status?: unknown;
   total_produtos?: unknown;
-  estoque?: unknown;
+  estoque?: FacilzapStockRaw;
   [key: string]: unknown;
 };
 
@@ -56,8 +71,9 @@ export type FacilzapVariationReferenceRaw =
       grupo?: unknown;
       status?: unknown;
       ativado?: unknown;
+      ativada?: unknown;
       ativo?: unknown;
-      estoque?: unknown;
+      estoque?: FacilzapStockRaw;
       quantidade?: unknown;
       [key: string]: unknown;
     };
@@ -74,6 +90,6 @@ export type FacilzapProductRaw = {
   categoria_nome?: unknown;
   categorias?: unknown;
   variacoes?: FacilzapVariationReferenceRaw[] | string | null;
-  estoque?: unknown;
+  estoque?: FacilzapStockRaw;
   [key: string]: unknown;
 };

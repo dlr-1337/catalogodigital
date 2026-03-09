@@ -9,6 +9,7 @@ import type {
   FacilzapProductRaw,
   FacilzapVariationRaw,
 } from "@/types/facilzap";
+import { isCatalogProductAvailable } from "./catalog-availability";
 import { listAllPages } from "./client";
 
 const UNKNOWN_CATEGORY_ID = "outros";
@@ -366,7 +367,9 @@ function normalizeVariation(raw: FacilzapVariationRaw): InternalVariation | null
     estoque:
       toNumber(raw.estoque) ??
       (isRecord(raw.estoque)
-        ? toNumber(getObjectValue(raw.estoque, ["quantidade", "saldo", "total"]))
+        ? toNumber(
+            getObjectValue(raw.estoque, ["estoque", "quantidade", "saldo", "total"]),
+          )
         : null),
   };
 }
@@ -393,11 +396,13 @@ function parseVariationReferences(value: unknown): InternalVariationReference[] 
         grupoNome: isRecord(item.grupo)
           ? toText(getObjectValue(item.grupo, ["nome", "name"]))
           : null,
-        status: getObjectValue(item, ["status", "ativo", "ativado"]),
+        status: getObjectValue(item, ["status", "ativo", "ativado", "ativada"]),
         estoque:
-          toNumber(getObjectValue(item, ["estoque", "quantidade"])) ??
+          toNumber(getObjectValue(item, ["estoque", "quantidade", "saldo", "total"])) ??
           (isRecord(item.estoque)
-            ? toNumber(getObjectValue(item.estoque, ["quantidade", "saldo", "total"]))
+            ? toNumber(
+                getObjectValue(item.estoque, ["estoque", "quantidade", "saldo", "total"]),
+              )
             : null),
       };
     }
@@ -473,8 +478,7 @@ function normalizeProduct(
     return null;
   }
 
-  const active = parseActive(raw.ativado ?? raw.ativo ?? raw.status);
-  if (active === false) {
+  if (!isCatalogProductAvailable(raw)) {
     return null;
   }
 
