@@ -82,9 +82,8 @@ export default async function HomePage({ searchParams }: HomePageProps) {
                   Catálogo Digital
                 </h1>
                 <p className="mt-5 max-w-2xl text-sm leading-7 text-muted sm:text-base">
-                  Navegue por categorias, veja a foto principal de cada produto
-                  e consulte apenas os tamanhos disponiveis. O catálogo e
-                  atualizado automaticamente com novas entradas da API.
+                  Navegue pelas categorias, veja a foto principal de cada
+                  produto e consulte os tamanhos disponíveis com praticidade.
                 </p>
               </div>
               <dl className="grid grid-cols-2 gap-4 rounded-[1.75rem] border border-white/60 bg-panel p-5">
