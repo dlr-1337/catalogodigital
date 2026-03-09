@@ -108,7 +108,7 @@ export function CatalogFilters({
 
   return (
     <section
-      aria-label="Filtros do catalogo"
+      aria-label="Filtros do catálogo"
       className="rounded-[1.75rem] border border-white/55 bg-white/70 p-4 shadow-[0_18px_60px_rgba(42,30,20,0.08)] backdrop-blur-xl sm:p-5"
     >
       <div className="grid gap-4 lg:grid-cols-[minmax(0,1.5fr)_minmax(220px,0.7fr)_auto] lg:items-end">

@@ -74,16 +74,16 @@ export default async function HomePage({ searchParams }: HomePageProps) {
         <main className="mx-auto flex min-h-screen w-full max-w-7xl flex-col gap-8 px-4 py-6 sm:px-6 lg:px-8 lg:py-8">
           <section className="overflow-hidden rounded-[2rem] border border-white/60 bg-white/65 px-6 py-8 shadow-[var(--shadow)] sm:px-8 sm:py-10">
             <p className="text-xs font-semibold uppercase tracking-[0.32em] text-muted">
-              Catalogo publico
+              Catálogo público
             </p>
             <div className="mt-6 grid gap-8 lg:grid-cols-[1.4fr_0.8fr] lg:items-end">
               <div>
                 <h1 className="max-w-3xl font-display text-5xl leading-none text-ink sm:text-6xl">
-                  Catalogo Digital
+                  Catálogo Digital
                 </h1>
                 <p className="mt-5 max-w-2xl text-sm leading-7 text-muted sm:text-base">
                   Navegue por categorias, veja a foto principal de cada produto
-                  e consulte apenas os tamanhos disponiveis. O catalogo e
+                  e consulte apenas os tamanhos disponiveis. O catálogo e
                   atualizado automaticamente com novas entradas da API.
                 </p>
               </div>
@@ -142,7 +142,7 @@ export default async function HomePage({ searchParams }: HomePageProps) {
           <main className="mx-auto flex min-h-screen w-full max-w-5xl items-center px-4 py-8 sm:px-6 lg:px-8">
             <CatalogNotice
               title="Configuracao pendente"
-              description="Defina FACILZAP_TOKEN e FACILZAP_API_BASE_URL para carregar o catalogo. O token deve ser configurado apenas no servidor."
+              description="Defina FACILZAP_TOKEN e FACILZAP_API_BASE_URL para carregar o catálogo. O token deve ser configurado apenas no servidor."
               tone="warning"
             />
           </main>
@@ -156,7 +156,7 @@ export default async function HomePage({ searchParams }: HomePageProps) {
       <div className="catalog-shell min-h-screen">
         <main className="mx-auto flex min-h-screen w-full max-w-5xl items-center px-4 py-8 sm:px-6 lg:px-8">
           <CatalogNotice
-            title="Catalogo temporariamente indisponivel"
+            title="Catálogo temporariamente indisponivel"
             description="Nao foi possivel carregar os produtos agora. Tente novamente em alguns instantes."
             tone="error"
           />

@@ -14,9 +14,9 @@ const newsreader = Newsreader({
 });
 
 export const metadata: Metadata = {
-  title: "Catalogo Digital",
+  title: "Catálogo Digital",
   description:
-    "Catalogo digital publico para exibicao de produtos de atacado, com foco em foto, categoria e tamanhos.",
+    "Catálogo digital publico para exibicao de produtos de atacado, com foco em foto, categoria e tamanhos.",
 };
 
 export default function RootLayout({

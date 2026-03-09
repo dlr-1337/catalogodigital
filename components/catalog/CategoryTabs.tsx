@@ -22,7 +22,7 @@ export function CategoryTabs({
 
   return (
     <nav
-      aria-label="Categorias do catalogo"
+      aria-label="Categorias do catálogo"
       className="sticky top-0 z-20 -mx-4 overflow-hidden rounded-[1.75rem] border border-white/55 bg-white/70 px-4 py-4 shadow-[0_18px_60px_rgba(42,30,20,0.08)] backdrop-blur-xl sm:mx-0"
     >
       <div className="flex gap-3 overflow-x-auto pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">

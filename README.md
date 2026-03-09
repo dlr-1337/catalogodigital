@@ -1,6 +1,6 @@
-# Catalogo Digital
+# Catálogo Digital
 
-Catalogo publico em Next.js para exibicao de produtos de atacado, separado da loja principal e sem qualquer elemento de venda. A interface mostra apenas foto principal, nome e tamanhos disponiveis.
+Catálogo publico em Next.js para exibicao de produtos de atacado, separado da loja principal e sem qualquer elemento de venda. A interface mostra apenas foto principal, nome e tamanhos disponiveis.
 
 ## Stack
 
@@ -116,7 +116,7 @@ Referencias oficiais:
 1. Crie um projeto novo na Vercel apontando para este repositorio.
 2. Defina as mesmas variaveis de ambiente no painel.
 3. Rode o primeiro deploy.
-4. Verifique se a rota publica carregou o catalogo corretamente.
+4. Verifique se a rota publica carregou o catálogo corretamente.
 
 ## Nome do projeto e URL
 
