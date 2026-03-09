@@ -4,11 +4,15 @@ import type { CatalogCategory } from "@/types/catalog";
 type CategoryTabsProps = {
   categories: CatalogCategory[];
   selectedCategory: string;
+  currentName: string;
+  currentSize: string | null;
 };
 
 export function CategoryTabs({
   categories,
   selectedCategory,
+  currentName,
+  currentSize,
 }: CategoryTabsProps) {
   if (categories.length === 0) {
     return null;
@@ -24,10 +28,21 @@ export function CategoryTabs({
       <div className="flex gap-3 overflow-x-auto pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
         {items.map((category) => {
           const isActive = selectedCategory === category.id;
-          const href =
-            category.id === "all"
-              ? "/"
-              : `/?categoria=${encodeURIComponent(category.id)}`;
+          const params = new URLSearchParams();
+
+          if (category.id !== "all") {
+            params.set("categoria", category.id);
+          }
+
+          if (currentName) {
+            params.set("nome", currentName);
+          }
+
+          if (currentSize) {
+            params.set("tamanho", currentSize);
+          }
+
+          const href = params.size > 0 ? `/?${params.toString()}` : "/";
 
           return (
             <Link

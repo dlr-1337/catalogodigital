@@ -1,3 +1,5 @@
+import { collectAvailableSizes, filterCatalogProducts, sanitizeFilterValue } from "@/lib/catalog-filters";
+import { CatalogFilters } from "@/components/catalog/CatalogFilters";
 import { CatalogNotice } from "@/components/catalog/CatalogNotice";
 import { CategoryTabs } from "@/components/catalog/CategoryTabs";
 import { ProductGrid } from "@/components/catalog/ProductGrid";
@@ -5,7 +7,11 @@ import { FacilzapConfigError } from "@/lib/env";
 import { getCatalogSnapshot } from "@/services/facilzap/catalog";
 
 type HomePageProps = {
-  searchParams: Promise<{ categoria?: string | string[] | undefined }>;
+  searchParams: Promise<{
+    categoria?: string | string[] | undefined;
+    nome?: string | string[] | undefined;
+    tamanho?: string | string[] | undefined;
+  }>;
 };
 
 function readCategoryParam(value: string | string[] | undefined) {
@@ -16,9 +22,19 @@ function readCategoryParam(value: string | string[] | undefined) {
   return value ?? "all";
 }
 
+function readFilterParam(value: string | string[] | undefined) {
+  if (Array.isArray(value)) {
+    return sanitizeFilterValue(value[0]);
+  }
+
+  return sanitizeFilterValue(value);
+}
+
 export default async function HomePage({ searchParams }: HomePageProps) {
   const params = await searchParams;
   const requestedCategory = readCategoryParam(params.categoria);
+  const currentName = readFilterParam(params.nome) ?? "";
+  const requestedSize = readFilterParam(params.tamanho);
 
   try {
     const snapshot = await getCatalogSnapshot();
@@ -30,12 +46,28 @@ export default async function HomePage({ searchParams }: HomePageProps) {
     const selectedCategoryName =
       snapshot.categories.find((category) => category.id === selectedCategory)
         ?.nome ?? "Todas";
-    const products =
+    const categoryProducts =
       selectedCategory === "all"
         ? snapshot.products
         : snapshot.products.filter(
             (product) => product.categoria === selectedCategory,
           );
+    const availableSizes = collectAvailableSizes(categoryProducts);
+    const selectedSize =
+      requestedSize && availableSizes.includes(requestedSize)
+        ? requestedSize
+        : null;
+    const products = filterCatalogProducts(categoryProducts, {
+      nome: currentName,
+      tamanho: selectedSize,
+    });
+    const hasActiveFilters = Boolean(currentName || selectedSize);
+    const emptyTitle = hasActiveFilters
+      ? "Nenhum produto encontrado com os filtros atuais"
+      : "Nenhum produto encontrado";
+    const emptyDescription = hasActiveFilters
+      ? "Nao encontramos itens para a combinacao atual de categoria, nome e tamanho. Ajuste ou limpe os filtros para continuar navegando."
+      : "Nao ha itens para a categoria selecionada no momento. Tente outra categoria ou volte em alguns minutos.";
 
     return (
       <div className="catalog-shell min-h-screen">
@@ -79,12 +111,20 @@ export default async function HomePage({ searchParams }: HomePageProps) {
           <CategoryTabs
             categories={snapshot.categories}
             selectedCategory={selectedCategory}
+            currentName={currentName}
+            currentSize={selectedSize}
+          />
+
+          <CatalogFilters
+            currentName={currentName}
+            currentSize={selectedSize}
+            availableSizes={availableSizes}
           />
 
           {products.length === 0 ? (
             <CatalogNotice
-              title="Nenhum produto encontrado"
-              description="Nao ha itens para a categoria selecionada no momento. Tente outra categoria ou volte em alguns minutos."
+              title={emptyTitle}
+              description={emptyDescription}
             />
           ) : (
             <ProductGrid
