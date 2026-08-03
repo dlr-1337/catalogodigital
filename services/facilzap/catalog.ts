@@ -14,6 +14,9 @@ import { listAllPages } from "./client";
 
 const UNKNOWN_CATEGORY_ID = "outros";
 const UNKNOWN_CATEGORY_LABEL = "Outros";
+// Categorias da FacilZap que nao devem aparecer como aba no catalogo
+// (nome normalizado). Os produtos delas continuam visiveis em "Todas".
+const HIDDEN_CATEGORY_NAME_KEYS = new Set(["tenis-pedido-whatsapp"]);
 const FALLBACK_PRODUCT_NAME = "Produto sem nome";
 const SIZE_GROUP_HINTS = ["tamanho", "tamanhos", "numeracao", "size"];
 const sizeCollator = new Intl.Collator("pt-BR", {
@@ -512,6 +515,11 @@ const loadCatalogSnapshot = cache(async (): Promise<CatalogSnapshot> => {
 
   const categoryLookup = buildCategoryLookup(categoriesRaw);
   const variationLookup = buildVariationLookup(variationsRaw);
+  const hiddenCategoryIds = new Set(
+    categoryLookup.normalized
+      .filter((category) => HIDDEN_CATEGORY_NAME_KEYS.has(category.nameKey))
+      .map((category) => category.id),
+  );
   const products = productsRaw
     .map((raw) => normalizeProduct(raw, categoryLookup, variationLookup))
     .filter((item): item is CatalogProduct => Boolean(item));
@@ -519,6 +527,7 @@ const loadCatalogSnapshot = cache(async (): Promise<CatalogSnapshot> => {
   const usedCategoryIds = new Set(products.map((product) => product.categoria));
   const categories = categoryLookup.normalized
     .filter((category) => usedCategoryIds.has(category.id))
+    .filter((category) => !hiddenCategoryIds.has(category.id))
     .sort((left, right) =>
       left.sortOrder === right.sortOrder
         ? sizeCollator.compare(left.nome, right.nome)
