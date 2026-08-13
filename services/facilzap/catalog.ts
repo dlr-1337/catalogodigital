@@ -522,7 +522,8 @@ const loadCatalogSnapshot = cache(async (): Promise<CatalogSnapshot> => {
   );
   const products = productsRaw
     .map((raw) => normalizeProduct(raw, categoryLookup, variationLookup))
-    .filter((item): item is CatalogProduct => Boolean(item));
+    .filter((item): item is CatalogProduct => Boolean(item))
+    .filter((product) => !hiddenCategoryIds.has(product.categoria));
 
   const usedCategoryIds = new Set(products.map((product) => product.categoria));
   const categories = categoryLookup.normalized
