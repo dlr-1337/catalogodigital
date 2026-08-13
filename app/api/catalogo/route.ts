@@ -20,7 +20,7 @@ export async function GET(request: NextRequest) {
     const message =
       error instanceof FacilzapConfigError
         ? error.message
-        : "Nao foi possivel carregar o catalogo.";
+        : "Não foi possivel carregar o catalogo.";
 
     if (!(error instanceof FacilzapConfigError)) {
       console.error("[api/catalogo] request failed", error);
