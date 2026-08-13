@@ -42,7 +42,7 @@ export default async function HomePage({ searchParams }: HomePageProps) {
       (category) => category.id === requestedCategory,
     )
       ? requestedCategory
-      : "all";
+      : snapshot.categories[0]?.id ?? "all";
     const selectedCategoryName =
       snapshot.categories.find((category) => category.id === selectedCategory)
         ?.nome ?? "Todas";
